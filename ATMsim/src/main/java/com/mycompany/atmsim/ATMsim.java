@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.atmsim;
 
-/**
- *
- * @author HP
- */
+import javax.swing.SwingUtilities;
+
 public class ATMsim {
 
     public static void main(String[] args) {
@@ -18,5 +12,6 @@ public class ATMsim {
           admin.viewusers();
         
          
+
     }
 }
