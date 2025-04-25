@@ -11,6 +11,12 @@ package com.mycompany.atmsim;
 public class ATMsim {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        AdminSide admin=new AdminSide();
+          admin.adduser();
+//        admin.updateuser();
+//       admin.deleteuser();
+          admin.viewusers();
+        
+         
     }
 }
