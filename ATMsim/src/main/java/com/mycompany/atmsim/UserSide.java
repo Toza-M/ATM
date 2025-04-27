@@ -9,5 +9,11 @@ package com.mycompany.atmsim;
  * @author HP
  */
 public class UserSide {
+    public static void main(String[] args) {
+        UserGui USER = new UserGui();
+        
+
+        }
+    }
     
-}
+
