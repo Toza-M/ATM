@@ -2,20 +2,10 @@
 package com.mycompany.atmsim;
 
 import java.awt.Button;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class MainWindow extends JFrame implements ActionListener{
     JButton userButton;
@@ -79,7 +69,7 @@ public class MainWindow extends JFrame implements ActionListener{
     // The user and admin sides are not implemented yet
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == userButton) new UserSide();
+        // if(e.getSource() == userButton) new UserSide();
         if(e.getSource() == adminButton) new AdminSide();
     }
     
