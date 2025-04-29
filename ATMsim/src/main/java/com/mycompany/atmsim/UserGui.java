@@ -112,11 +112,8 @@ public class UserGui extends JFrame {
                 JOptionPane.showMessageDialog(this, "Invalid PIN!");
             }
         });
-
  
     }
 
-    public static void main(String[] args) {
-        new UserGui();
-    }
 }
+

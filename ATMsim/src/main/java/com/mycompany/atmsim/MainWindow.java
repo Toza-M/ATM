@@ -1,7 +1,6 @@
 
 package com.mycompany.atmsim;
 
-import java.awt.Button;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,6 +61,7 @@ public class MainWindow extends JFrame implements ActionListener{
 
         add(mainPanel);
 
+        userButton.addActionListener(this);
         
     }
 
@@ -69,7 +69,7 @@ public class MainWindow extends JFrame implements ActionListener{
     // The user and admin sides are not implemented yet
     @Override
     public void actionPerformed(ActionEvent e) {
-        // if(e.getSource() == userButton) new UserSide();
+        if(e.getSource() == userButton) new UserGui();
         if(e.getSource() == adminButton) new AdminSide();
     }
     

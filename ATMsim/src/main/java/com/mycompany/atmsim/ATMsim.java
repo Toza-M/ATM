@@ -10,6 +10,7 @@ public class ATMsim {
 //        admin.updateuser();
 //       admin.deleteuser();
           admin.viewusers();
+          MainWindow mainWindow = new MainWindow();
         
          
 

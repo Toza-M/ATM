@@ -24,7 +24,6 @@ public class UserSide {
         loadUserData();
     }
 
-    
 
     private void loadUserData() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
