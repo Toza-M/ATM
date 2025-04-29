@@ -3,37 +3,36 @@ package com.mycompany.atmsim;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class UserGui {
-    private JFrame frame;
-    private JTextField cardField;
-    private JPasswordField pinField;
-    private UserSide currentUser;
+public class UserGui extends JFrame {
+     JTextField cardField;
+     JPasswordField pinField;
+     UserSide currentUser;
 
     public UserGui() {
-        frame = new JFrame("User Login");
-        frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
+        setTitle("User Login");
+         setSize(400, 300);
+         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         setLayout(null);
 
         JLabel cardLabel = new JLabel("Card Number:");
         cardLabel.setBounds(50, 50, 100, 30);
-        frame.add(cardLabel);
+         add(cardLabel);
 
         cardField = new JTextField();
         cardField.setBounds(150, 50, 150, 30);
-        frame.add(cardField);
+         add(cardField);
 
         JLabel pinLabel = new JLabel("PIN:");
         pinLabel.setBounds(50, 100, 100, 30);
-        frame.add(pinLabel);
+         add(pinLabel);
 
         pinField = new JPasswordField();
         pinField.setBounds(150, 100, 150, 30);
-        frame.add(pinField);
+         add(pinField);
 
         JButton loginButton = new JButton("Login");
         loginButton.setBounds(150, 150, 100, 30);
-        frame.add(loginButton);
+         add(loginButton);
 
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -43,37 +42,37 @@ public class UserGui {
                     currentUser = new UserSide(cardNumber, pin);
                     showUserOptions();
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Invalid Card Number or PIN!");
+                    JOptionPane.showMessageDialog(UserGui.this, "Invalid Card Number or PIN!");
                 }
             }
         });
 
-        frame.setVisible(true);
+         setVisible(true);
     }
 
     private void showUserOptions() {
-        frame.getContentPane().removeAll();
-        frame.repaint();
+         getContentPane().removeAll();
+         repaint();
 
         JLabel welcomeLabel = new JLabel("Welcome, " + currentUser.getName());
         welcomeLabel.setBounds(100, 30, 200, 30);
-        frame.add(welcomeLabel);
+         add(welcomeLabel);
 
         JButton depositButton = new JButton("Deposit");
         depositButton.setBounds(100, 70, 200, 30);
-        frame.add(depositButton);
+         add(depositButton);
 
         JButton withdrawButton = new JButton("Withdraw");
         withdrawButton.setBounds(100, 110, 200, 30);
-        frame.add(withdrawButton);
+         add(withdrawButton);
 
         JButton showBalanceButton = new JButton("Show Balance");
         showBalanceButton.setBounds(100, 150, 200, 30);
-        frame.add(showBalanceButton);
+         add(showBalanceButton);
 
         JButton changePinButton = new JButton("Change PIN");
         changePinButton.setBounds(100, 190, 200, 30);
-        frame.add(changePinButton);
+         add(changePinButton);
 
         // depositButton.addActionListener(e -> {
         //     String amountStr = JOptionPane.showInputDialog(frame, "Enter amount to deposit:");
@@ -101,16 +100,16 @@ public class UserGui {
         // });
 
         showBalanceButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Your Balance: " + currentUser.getBalance());
+            JOptionPane.showMessageDialog(this, "Your Balance: " + currentUser.getBalance());
         });
 
         changePinButton.addActionListener(e -> {
-            String newPin = JOptionPane.showInputDialog(frame, "Enter new PIN:");
+            String newPin = JOptionPane.showInputDialog(this, "Enter new PIN:");
             if (newPin != null && !newPin.trim().isEmpty()) {
                 currentUser.changePin(newPin);
-                JOptionPane.showMessageDialog(frame, "PIN Changed Successfully!");
+                JOptionPane.showMessageDialog(this, "PIN Changed Successfully!");
             } else {
-                JOptionPane.showMessageDialog(frame, "Invalid PIN!");
+                JOptionPane.showMessageDialog(this, "Invalid PIN!");
             }
         });
 
