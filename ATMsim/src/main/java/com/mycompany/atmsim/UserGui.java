@@ -74,30 +74,30 @@ public class UserGui extends JFrame {
         changePinButton.setBounds(100, 190, 200, 30);
          add(changePinButton);
 
-        // depositButton.addActionListener(e -> {
-        //     String amountStr = JOptionPane.showInputDialog(frame, "Enter amount to deposit:");
-        //     try {
-        //         double amount = Double.parseDouble(amountStr);
-        //         currentUser.deposit(amount);
-        //         JOptionPane.showMessageDialog(frame, "Deposited Successfully!");
-        //     } catch (Exception ex) {
-        //         JOptionPane.showMessageDialog(frame, "Invalid amount!");
-        //     }
-        // });
+         depositButton.addActionListener(e -> {
+             String amountStr = JOptionPane.showInputDialog(this, "Enter amount to deposit:");
+             try {
+                 double amount = Double.parseDouble(amountStr);
+                 currentUser.deposit(amount);
+                 JOptionPane.showMessageDialog(this, "Deposited Successfully!");
+             } catch (Exception ex) {
+                 JOptionPane.showMessageDialog(this, "Invalid amount!");
+             }
+         });
 
-        // withdrawButton.addActionListener(e -> {
-        //     String amountStr = JOptionPane.showInputDialog(frame, "Enter amount to withdraw:");
-        //     try {
-        //         double amount = Double.parseDouble(amountStr);
-        //         if (currentUser.withdraw(amount)) {
-        //             JOptionPane.showMessageDialog(frame, "Withdrawn Successfully!");
-        //         } else {
-        //             JOptionPane.showMessageDialog(frame, "Insufficient Balance!");
-        //         }
-        //     } catch (Exception ex) {
-        //         JOptionPane.showMessageDialog(frame, "Invalid amount!");
-        //     }
-        // });
+         withdrawButton.addActionListener(e -> {
+             String amountStr = JOptionPane.showInputDialog(this, "Enter amount to withdraw:");
+             try {
+                 double amount = Double.parseDouble(amountStr);
+                 if (currentUser.withdraw(amount)) {
+                     JOptionPane.showMessageDialog(this, "Withdrawn Successfully!");
+                 } else {
+                     JOptionPane.showMessageDialog(this, "Insufficient Balance!");
+                 }
+             } catch (Exception ex) {
+                 JOptionPane.showMessageDialog(this, "Invalid amount!");
+             }
+         });
 
         showBalanceButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Your Balance: " + currentUser.getBalance());
