@@ -3,8 +3,14 @@ package com.mycompany.atmsim;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.awt.event.*;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
 
-public class AdminSide {
+
+
+public class AdminSide extends JFrame {
  private Scanner scanner=new Scanner(System.in); 
  private ArrayList<String[]> users=new ArrayList<>(); // array list  
  
@@ -23,7 +29,7 @@ public class AdminSide {
          String pin=scanner.nextLine();
          
          
-         String[] newuser=new String[4];
+          String[] newuser=new String[4];
          newuser[0]=name;
          newuser[1]=accountnumber;
          newuser[2]=String.valueOf(balance);
@@ -117,6 +123,86 @@ System.out.println("user details updated");
             System.out.println();
         }
     }
+ private JFrame frame; 
+
+    AdminSide(){
+
+frame=new JFrame("Admin side");
+frame.setSize(600, 500);
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+frame.setLayout(new BorderLayout());
+
+
+JPanel inputpanel = new JPanel(new GridLayout(5, 2));
+
+        
+        JLabel namelabel = new JLabel("Name:");
+        JTextField namefield = new JTextField();
+        JLabel accountnumberlabel = new JLabel("Account Number:");
+        JTextField accountnumberfield = new JTextField();
+        JLabel balancelabel = new JLabel("current Balance:");
+        JTextField balancefield = new JTextField();
+        JLabel pinlabel = new JLabel("PIN");
+        JTextField pinfield = new JTextField();
+
+       
+        inputpanel.add(namelabel);
+        inputpanel.add(namefield);
+        inputpanel.add(accountnumberlabel);
+        inputpanel.add(accountnumberfield);
+        inputpanel.add(balancelabel);
+        inputpanel.add(balancefield);
+        inputpanel.add(pinlabel);
+        inputpanel.add(pinfield);
+        
+                
+        
+        
+        JButton addbutton = new JButton("Add User");
+        addbutton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = namefield.getText();
+                String accountnumber = accountnumberfield.getText();
+                String balance = balancefield.getText();
+                String pin = pinfield.getText();
+
+              
+                if (name.isEmpty() || accountnumber.isEmpty() || balance.isEmpty() || pin.isEmpty()) 
+                {
+                    JOptionPane.showMessageDialog(frame, "all fields required", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+        
+        String[] newUser = {name, accountnumber, balance, pin};
+        users.add(newUser);
+
+                
+                namefield.setText("");
+                accountnumberfield.setText("");
+                balancefield.setText("");
+                pinfield.setText("");
+
+              
+                JOptionPane.showMessageDialog(frame, "user added successfully!!!!!!");
+            }
+        });
+                
+                 inputpanel.add(addbutton);
+                frame.add(inputpanel,BorderLayout.CENTER);
+                frame.setVisible(true);
+                
+              
+             
+ }
+    
 }
+
+
+  
+
+
+ 
  
   
