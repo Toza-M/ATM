@@ -135,12 +135,13 @@ frame.setLayout(new BorderLayout());
 
 JPanel inputpanel = new JPanel(new GridLayout(5, 2));
 
+
         
         JLabel namelabel = new JLabel("Name:");
         JTextField namefield = new JTextField();
         JLabel accountnumberlabel = new JLabel("Account Number:");
         JTextField accountnumberfield = new JTextField();
-        JLabel balancelabel = new JLabel("current Balance:");
+        JLabel balancelabel = new JLabel("intial balance:");
         JTextField balancefield = new JTextField();
         JLabel pinlabel = new JLabel("PIN");
         JTextField pinfield = new JTextField();
@@ -188,14 +189,43 @@ JPanel inputpanel = new JPanel(new GridLayout(5, 2));
                 JOptionPane.showMessageDialog(frame, "user added successfully!!!!!!");
             }
         });
-                
+        
+//        JPanel viewallusers=new JPanel(new GridLayout(8,2
+        JPanel centralpanel=new JPanel(new BorderLayout());
+        JTextArea textarea=new JTextArea();
+        textarea.setEditable(false);
+        JScrollPane scrollpane=new JScrollPane (textarea);
+        
+        
+        JButton viewbutton=new JButton("view users");
+        viewbutton.addActionListener(e ->
+        {
+           String result= ""; //start with empty string
+        if(users.isEmpty()){
+           result="no user found";
+           }
+          else{
+           for(String[]user:users){
+               result+="User details:\n";
+               result+="name:" +user[0] +" \n";
+                result+="Account number:" +user[1] +" \n";
+                 result+="Balance:" +user[2] +" \n";
+                  result+="PIN: ***/n"; 
+          }
+           }
+        textarea.setText(result);
+        
+ });
                  inputpanel.add(addbutton);
-                frame.add(inputpanel,BorderLayout.CENTER);
-                frame.setVisible(true);
                 
-              
-             
- }
+                centralpanel.add(viewbutton , BorderLayout.NORTH);
+                 centralpanel.add(scrollpane , BorderLayout.CENTER);
+                 
+                frame.add(inputpanel,BorderLayout.NORTH);
+                frame.add(centralpanel , BorderLayout.CENTER);
+                
+                frame.setVisible(true);
+     }
     
 }
 
