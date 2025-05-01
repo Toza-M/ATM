@@ -210,7 +210,7 @@ JPanel inputpanel = new JPanel(new GridLayout(5, 2));
                result+="name:" +user[0] +" \n";
                 result+="Account number:" +user[1] +" \n";
                  result+="Balance:" +user[2] +" \n";
-                  result+="PIN: ***/n"; 
+                  result+="PIN: ***" + "\n"; 
           }
            }
         textarea.setText(result);
