@@ -132,20 +132,36 @@ frame.setSize(600, 500);
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setLayout(new BorderLayout());
 
+Color panel = new Color(245, 245, 245);// 34aan a8yr mara wahda fkolo
+Color button = new Color(0, 120, 215);
+Color buttontextcolor = Color.white;
+Dimension fieldsize = new Dimension(125, 25);
+
 
 JPanel inputpanel = new JPanel(new GridLayout(5, 2));
+inputpanel.setBorder(BorderFactory.createTitledBorder("Adduser"));
+inputpanel.setBackground(panel);
 
 
         
         JLabel namelabel = new JLabel("Name:");
         JTextField namefield = new JTextField();
+        namefield.setPreferredSize(fieldsize);
+        
         JLabel accountnumberlabel = new JLabel("Account Number:");
         JTextField accountnumberfield = new JTextField();
+        accountnumberfield.setPreferredSize(fieldsize);
+        
         JLabel balancelabel = new JLabel("intial balance:");
         JTextField balancefield = new JTextField();
+        balancefield.setPreferredSize(fieldsize);
+        
         JLabel pinlabel = new JLabel("PIN");
-        JTextField pinfield = new JTextField();
+        JPasswordField pinfield = new JPasswordField();
+        pinfield.setPreferredSize(fieldsize);
 
+      
+       
        
         inputpanel.add(namelabel);
         inputpanel.add(namefield);
@@ -160,6 +176,16 @@ JPanel inputpanel = new JPanel(new GridLayout(5, 2));
         
         
         JButton addbutton = new JButton("Add User");
+        addbutton.setBackground(button);
+        addbutton.setForeground(buttontextcolor);
+        addbutton.setPreferredSize(new Dimension(120,30));
+        
+        
+         namefield.addActionListener(e ->accountnumberfield.requestFocus());// 34qn lm ados enter ywdeny 3l b3do
+           accountnumberfield.addActionListener(e ->balancefield.requestFocus());
+              balancefield.addActionListener(e ->pinfield.requestFocus());
+                 pinfield.addActionListener(e ->addbutton.requestFocus());
+                
         addbutton.addActionListener(new ActionListener() 
         {
             @Override
@@ -190,14 +216,21 @@ JPanel inputpanel = new JPanel(new GridLayout(5, 2));
             }
         });
         
-//        JPanel viewallusers=new JPanel(new GridLayout(8,2
+//        JPanel viewallusers=new JPanel(new GridLayout(8,2)
         JPanel centralpanel=new JPanel(new BorderLayout());
+        centralpanel.setBorder(BorderFactory.createTitledBorder("view users"));
+        centralpanel.setBackground(panel);
+        
         JTextArea textarea=new JTextArea();
         textarea.setEditable(false);
         JScrollPane scrollpane=new JScrollPane (textarea);
         
         
         JButton viewbutton=new JButton("view users");
+        viewbutton.setBackground(button);
+        viewbutton.setForeground(buttontextcolor);
+        viewbutton.setPreferredSize(new Dimension(120,30));
+        
         viewbutton.addActionListener(e ->
         {
            String result= ""; //start with empty string
@@ -216,15 +249,160 @@ JPanel inputpanel = new JPanel(new GridLayout(5, 2));
         textarea.setText(result);
         
  });
-                 inputpanel.add(addbutton);
+        JPanel updatepanel = new JPanel(new GridLayout(4, 2));
+        updatepanel.setBackground(panel);
+        updatepanel.setBorder(BorderFactory.createTitledBorder("update"));
+
+        JLabel updateaccountnumberlabel = new JLabel("Account Number:");
+        JTextField updateaccountnumberfield = new JTextField();
+        updatepanel.setPreferredSize(fieldsize);
+        
+        JLabel updatenamelabel = new JLabel("New Name:");
+        JTextField updatenamefield = new JTextField();
+       updatenamefield.setPreferredSize(fieldsize);
+       
+        JLabel updatepinlabel = new JLabel("New PIN:");
+        JPasswordField updatepinfield = new JPasswordField();
+        updatepinfield.setPreferredSize(fieldsize);
+        
+        
+        
+        
+        
+        
+       
+        
+
+        JButton updateButton = new JButton("Update User");
+        updateButton.setBackground(button);
+        updateButton.setForeground(buttontextcolor);
+        updateButton.setPreferredSize(new Dimension(120,30));
+        
+        
+         updateaccountnumberfield.addActionListener(e ->updatenamefield.requestFocus());// 34qn lm ados enter ywdeny 3l b3do
+         updatenamefield.addActionListener(e ->updatepinfield.requestFocus());
+         updatepinfield.addActionListener(e ->updateButton.requestFocus());
+              
                 
-                centralpanel.add(viewbutton , BorderLayout.NORTH);
+    
+      
+        updateButton.addActionListener(e -> {
+            String accountnumber = updateaccountnumberfield.getText();
+            String newname = updatenamefield.getText();
+            String newpin = updatepinfield.getText();
+
+            if (accountnumber.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Account Number is required!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            boolean userFound = false;
+
+            for (String[] user : users) {
+                if (user[1].equals(accountnumber)) {
+                    userFound = true;
+
+                    if (!newname.isEmpty()) {
+                        user[0] = newname; 
+                    }
+                    if (!newpin.isEmpty()) {
+                        user[3] = newpin; 
+                    }
+
+                    JOptionPane.showMessageDialog(frame, "user details updated successfully!");
+                    break;
+                }
+            }
+
+            if (!userFound) {
+                JOptionPane.showMessageDialog(frame, "user not found", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        
+            updateaccountnumberfield.setText("");
+            updatenamefield.setText("");
+            updatepinfield.setText("");
+        });
+
+        updatepanel.add(updateaccountnumberlabel);
+        updatepanel.add(updateaccountnumberfield);
+        updatepanel.add(updatenamelabel);
+        updatepanel.add(updatenamefield);
+        updatepanel.add(updatepinlabel);
+        updatepanel.add(updatepinfield);
+        updatepanel.add(updateButton);
+        
+        
+        
+        
+        
+        JPanel deletePanel = new JPanel(new GridLayout(5, 2));
+         deletePanel.setBorder(BorderFactory.createTitledBorder("delete"));
+         deletePanel.setBackground(panel);
+
+        JLabel deleteAccountNumberLabel = new JLabel("Account Number to Delete:");
+        JTextField deleteAccountNumberField = new JTextField();
+        deleteAccountNumberField.setPreferredSize(fieldsize);
+
+        JButton deleteButton = new JButton("Delete User");
+        deleteButton.setBackground(button);
+        deleteButton.setForeground(buttontextcolor);
+        deleteButton.setPreferredSize(new Dimension(120,30));
+    
+      
+        
+        deleteButton.addActionListener(e -> {
+            String accountNumber = deleteAccountNumberField.getText();
+
+            if (accountNumber.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Account Number is required!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            boolean userDeleted = false;
+
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i)[1].equals(accountNumber)) {
+                    users.remove(i);
+                    userDeleted = true;
+                    break;
+                }
+            }
+
+            if (userDeleted) {
+                JOptionPane.showMessageDialog(frame, "User deleted successfully!");
+            } else {
+                JOptionPane.showMessageDialog(frame, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+           
+            deleteAccountNumberField.setText("");
+        });
+
+        deletePanel.add(deleteAccountNumberLabel);
+        deletePanel.add(deleteAccountNumberField);
+        deletePanel.add(deleteButton);
+        
+        
+        
+                inputpanel.add(addbutton);
+                
+                 centralpanel.add(viewbutton , BorderLayout.NORTH);
                  centralpanel.add(scrollpane , BorderLayout.CENTER);
                  
-                frame.add(inputpanel,BorderLayout.NORTH);
-                frame.add(centralpanel , BorderLayout.CENTER);
+                 JTabbedPane tabbedpane=new JTabbedPane();
+               tabbedpane.addTab("Adduser",inputpanel);
+               tabbedpane.addTab("viewusers",centralpanel);
+                tabbedpane.addTab("delete",deletePanel);
+                tabbedpane.addTab("update",updatepanel);
+                
+                frame.add(tabbedpane,BorderLayout.CENTER);
                 
                 frame.setVisible(true);
+           
+                
+                
+                 
      }
     
 }
