@@ -1,4 +1,3 @@
-
 package com.mycompany.atmsim;
 
 import java.util.Scanner;
@@ -7,106 +6,94 @@ import java.awt.event.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
-
-
+import java.io.*;
 
 public class AdminSide extends JFrame {
- private Scanner scanner=new Scanner(System.in); 
- private ArrayList<String[]> users=new ArrayList<>(); // array list  
- 
- public void adduser(){
-     System.out.println("add user");
-     System.out.println("Enter ur name");
-     
-     String name=scanner.nextLine();
-      System.out.println("Enter account number");
-      String accountnumber=scanner.nextLine();
-      
-       System.out.println("Enter ur balance");
-        String balance=scanner.nextLine();
-        
+    private Scanner scanner = new Scanner(System.in);
+    private ArrayList<String[]> users = new ArrayList<>(); // array list
+    private static final String DATA_FILE = "admin_users.txt";
+
+    public void adduser() {
+        System.out.println("add user");
+        System.out.println("Enter ur name");
+
+        String name = scanner.nextLine();
+        System.out.println("Enter account number");
+        String accountnumber = scanner.nextLine();
+
+        System.out.println("Enter ur balance");
+        String balance = scanner.nextLine();
+
         System.out.println("Enter pin");
-         String pin=scanner.nextLine();
-         
-         
-          String[] newuser=new String[4];
-         newuser[0]=name;
-         newuser[1]=accountnumber;
-         newuser[2]=String.valueOf(balance);
-         newuser[3]=pin;
-         users.add(newuser);
-         System.out.println("user added succssfully");
-         System.out.println("ur account number is " + accountnumber);
-         
+        String pin = scanner.nextLine();
+
+        String[] newuser = new String[4];
+        newuser[0] = name;
+        newuser[1] = accountnumber;
+        newuser[2] = String.valueOf(balance);
+        newuser[3] = pin;
+        users.add(newuser);
+        System.out.println("user added succssfully");
+        System.out.println("ur account number is " + accountnumber);
+
     }
- 
- public void updateuser(){
- 
- System.out.println("update user details");
- System.out.println("enter ur number account number to update");
- String accountnumber=scanner.nextLine();
- 
- String[] finduser=null;
-for(String[] user:users){
-if (user[1].equals(accountnumber)){
-    finduser=user;
-    break;}
-}
-if(finduser==null){
-    
-System.out.println("user not found");
-return;
 
-}
-System.out.println("enter ur new name");
-String newname=scanner.nextLine();
-if(!newname.isEmpty()){
-finduser[0]=newname;
-}
-System.out.println("enter ur new pin");
-String newpin=scanner.nextLine();
-if(!newpin.isEmpty()){
-finduser[3]=newpin;
-}
-System.out.println("user details updated");
+    public void updateuser() {
 
-    
-}
- 
- 
- public void deleteuser(){
-     
-     System.out.println("delete user");
-     System.out.println("enter ur account number to delete");
-     String accountnumber=scanner.nextLine();
-     boolean deleted=false;
-     for(int i=0;i<users.size();i++){
-         if(users.get(i)[1].equals(accountnumber)){
-         users.remove(i);
-         deleted=true;
-         break;
-         
+        System.out.println("update user details");
+        System.out.println("enter ur number account number to update");
+        String accountnumber = scanner.nextLine();
+
+        String[] finduser = null;
+        for (String[] user : users) {
+            if (user[1].equals(accountnumber)) {
+                finduser = user;
+                break;
+            }
         }
+        if (finduser == null) {
+
+            System.out.println("user not found");
+            return;
+
+        }
+        System.out.println("enter ur new name");
+        String newname = scanner.nextLine();
+        if (!newname.isEmpty()) {
+            finduser[0] = newname;
+        }
+        System.out.println("enter ur new pin");
+        String newpin = scanner.nextLine();
+        if (!newpin.isEmpty()) {
+            finduser[3] = newpin;
+        }
+        System.out.println("user details updated");
+
     }
-     if(deleted){
-     System.out.println("user deleted succsefully");
-     }
-     else {
-     System.out.println("user not found");
-     }
-     
-     
-     
- 
- 
- 
- 
- 
- 
- }
- 
- 
- public void viewusers() {
+
+    public void deleteuser() {
+
+        System.out.println("delete user");
+        System.out.println("enter ur account number to delete");
+        String accountnumber = scanner.nextLine();
+        boolean deleted = false;
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i)[1].equals(accountnumber)) {
+                users.remove(i);
+                deleted = true;
+                break;
+
+            }
+        }
+        if (deleted) {
+            System.out.println("user deleted succsefully");
+        } else {
+            System.out.println("user not found");
+        }
+
+    }
+
+    public void viewusers() {
         System.out.println("view users");
 
         if (users.isEmpty()) {
@@ -123,46 +110,51 @@ System.out.println("user details updated");
             System.out.println();
         }
     }
- private JFrame frame; 
 
-    AdminSide(){
+    private JFrame frame;
 
-frame=new JFrame("Admin side");
-frame.setSize(600, 500);
-frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-frame.setLayout(new BorderLayout());
+    public AdminSide() {
+        // Load users from file when the program starts
+        users = loadUsersFromFile(DATA_FILE);
 
-Color panel = new Color(245, 245, 245);// 34aan a8yr mara wahda fkolo
-Color button = new Color(0, 120, 215);
-Color buttontextcolor = Color.white;
-Dimension fieldsize = new Dimension(125, 25);
+        frame = new JFrame("Admin side");
+        frame.setSize(600, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
+        // Save users to file when the program exits
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                saveUsersToFile(DATA_FILE);
+            }
+        });
 
-JPanel inputpanel = new JPanel(new GridLayout(5, 2));
-inputpanel.setBorder(BorderFactory.createTitledBorder("Adduser"));
-inputpanel.setBackground(panel);
+        Color panel = new Color(245, 245, 245);// 34aan a8yr mara wahda fkolo
+        Color button = new Color(0, 120, 215);
+        Color buttontextcolor = Color.white;
+        Dimension fieldsize = new Dimension(125, 25);
 
+        JPanel inputpanel = new JPanel(new GridLayout(5, 2));
+        inputpanel.setBorder(BorderFactory.createTitledBorder("Adduser"));
+        inputpanel.setBackground(panel);
 
-        
         JLabel namelabel = new JLabel("Name:");
         JTextField namefield = new JTextField();
         namefield.setPreferredSize(fieldsize);
-        
+
         JLabel accountnumberlabel = new JLabel("Account Number:");
         JTextField accountnumberfield = new JTextField();
         accountnumberfield.setPreferredSize(fieldsize);
-        
+
         JLabel balancelabel = new JLabel("intial balance:");
         JTextField balancefield = new JTextField();
         balancefield.setPreferredSize(fieldsize);
-        
+
         JLabel pinlabel = new JLabel("PIN");
         JPasswordField pinfield = new JPasswordField();
         pinfield.setPreferredSize(fieldsize);
 
-      
-       
-       
         inputpanel.add(namelabel);
         inputpanel.add(namefield);
         inputpanel.add(accountnumberlabel);
@@ -171,23 +163,18 @@ inputpanel.setBackground(panel);
         inputpanel.add(balancefield);
         inputpanel.add(pinlabel);
         inputpanel.add(pinfield);
-        
-                
-        
-        
+
         JButton addbutton = new JButton("Add User");
         addbutton.setBackground(button);
         addbutton.setForeground(buttontextcolor);
-        addbutton.setPreferredSize(new Dimension(120,30));
-        
-        
-         namefield.addActionListener(e ->accountnumberfield.requestFocus());// 34qn lm ados enter ywdeny 3l b3do
-           accountnumberfield.addActionListener(e ->balancefield.requestFocus());
-              balancefield.addActionListener(e ->pinfield.requestFocus());
-                 pinfield.addActionListener(e ->addbutton.requestFocus());
-                
-        addbutton.addActionListener(new ActionListener() 
-        {
+        addbutton.setPreferredSize(new Dimension(120, 30));
+
+        namefield.addActionListener(e -> accountnumberfield.requestFocus());// 34qn lm ados enter ywdeny 3l b3do
+        accountnumberfield.addActionListener(e -> balancefield.requestFocus());
+        balancefield.addActionListener(e -> pinfield.requestFocus());
+        pinfield.addActionListener(e -> addbutton.requestFocus());
+
+        addbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = namefield.getText();
@@ -195,60 +182,53 @@ inputpanel.setBackground(panel);
                 String balance = balancefield.getText();
                 String pin = pinfield.getText();
 
-              
-                if (name.isEmpty() || accountnumber.isEmpty() || balance.isEmpty() || pin.isEmpty()) 
-                {
+                if (name.isEmpty() || accountnumber.isEmpty() || balance.isEmpty() || pin.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "all fields required", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-        
-        String[] newUser = {name, accountnumber, balance, pin};
-        users.add(newUser);
 
-                
+                String[] newUser = { name, accountnumber, balance, pin };
+                users.add(newUser);
+
                 namefield.setText("");
                 accountnumberfield.setText("");
                 balancefield.setText("");
                 pinfield.setText("");
 
-              
                 JOptionPane.showMessageDialog(frame, "user added successfully!!!!!!");
             }
         });
-        
-//        JPanel viewallusers=new JPanel(new GridLayout(8,2)
-        JPanel centralpanel=new JPanel(new BorderLayout());
+
+        // JPanel viewallusers=new JPanel(new GridLayout(8,2)
+        JPanel centralpanel = new JPanel(new BorderLayout());
         centralpanel.setBorder(BorderFactory.createTitledBorder("view users"));
         centralpanel.setBackground(panel);
-        
-        JTextArea textarea=new JTextArea();
+
+        JTextArea textarea = new JTextArea();
         textarea.setEditable(false);
-        JScrollPane scrollpane=new JScrollPane (textarea);
-        
-        
-        JButton viewbutton=new JButton("view users");
+        JScrollPane scrollpane = new JScrollPane(textarea);
+
+        JButton viewbutton = new JButton("view users");
         viewbutton.setBackground(button);
         viewbutton.setForeground(buttontextcolor);
-        viewbutton.setPreferredSize(new Dimension(120,30));
-        
-        viewbutton.addActionListener(e ->
-        {
-           String result= ""; //start with empty string
-        if(users.isEmpty()){
-           result="no user found";
-           }
-          else{
-           for(String[]user:users){
-               result+="User details:\n";
-               result+="name:" +user[0] +" \n";
-                result+="Account number:" +user[1] +" \n";
-                 result+="Balance:" +user[2] +" \n";
-                  result+="PIN: ***" + "\n"; 
-          }
-           }
-        textarea.setText(result);
-        
- });
+        viewbutton.setPreferredSize(new Dimension(120, 30));
+
+        viewbutton.addActionListener(e -> {
+            String result = ""; // start with empty string
+            if (users.isEmpty()) {
+                result = "no user found";
+            } else {
+                for (String[] user : users) {
+                    result += "User details:\n";
+                    result += "name:" + user[0] + " \n";
+                    result += "Account number:" + user[1] + " \n";
+                    result += "Balance:" + user[2] + " \n";
+                    result += "PIN: ***" + "\n";
+                }
+            }
+            textarea.setText(result);
+
+        });
         JPanel updatepanel = new JPanel(new GridLayout(4, 2));
         updatepanel.setBackground(panel);
         updatepanel.setBorder(BorderFactory.createTitledBorder("update"));
@@ -256,36 +236,25 @@ inputpanel.setBackground(panel);
         JLabel updateaccountnumberlabel = new JLabel("Account Number:");
         JTextField updateaccountnumberfield = new JTextField();
         updatepanel.setPreferredSize(fieldsize);
-        
+
         JLabel updatenamelabel = new JLabel("New Name:");
         JTextField updatenamefield = new JTextField();
-       updatenamefield.setPreferredSize(fieldsize);
-       
+        updatenamefield.setPreferredSize(fieldsize);
+
         JLabel updatepinlabel = new JLabel("New PIN:");
         JPasswordField updatepinfield = new JPasswordField();
         updatepinfield.setPreferredSize(fieldsize);
-        
-        
-        
-        
-        
-        
-       
-        
 
         JButton updateButton = new JButton("Update User");
         updateButton.setBackground(button);
         updateButton.setForeground(buttontextcolor);
-        updateButton.setPreferredSize(new Dimension(120,30));
-        
-        
-         updateaccountnumberfield.addActionListener(e ->updatenamefield.requestFocus());// 34qn lm ados enter ywdeny 3l b3do
-         updatenamefield.addActionListener(e ->updatepinfield.requestFocus());
-         updatepinfield.addActionListener(e ->updateButton.requestFocus());
-              
-                
-    
-      
+        updateButton.setPreferredSize(new Dimension(120, 30));
+
+        updateaccountnumberfield.addActionListener(e -> updatenamefield.requestFocus());// 34qn lm ados enter ywdeny 3l
+                                                                                        // b3do
+        updatenamefield.addActionListener(e -> updatepinfield.requestFocus());
+        updatepinfield.addActionListener(e -> updateButton.requestFocus());
+
         updateButton.addActionListener(e -> {
             String accountnumber = updateaccountnumberfield.getText();
             String newname = updatenamefield.getText();
@@ -303,10 +272,10 @@ inputpanel.setBackground(panel);
                     userFound = true;
 
                     if (!newname.isEmpty()) {
-                        user[0] = newname; 
+                        user[0] = newname;
                     }
                     if (!newpin.isEmpty()) {
-                        user[3] = newpin; 
+                        user[3] = newpin;
                     }
 
                     JOptionPane.showMessageDialog(frame, "user details updated successfully!");
@@ -318,7 +287,6 @@ inputpanel.setBackground(panel);
                 JOptionPane.showMessageDialog(frame, "user not found", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-        
             updateaccountnumberfield.setText("");
             updatenamefield.setText("");
             updatepinfield.setText("");
@@ -331,14 +299,10 @@ inputpanel.setBackground(panel);
         updatepanel.add(updatepinlabel);
         updatepanel.add(updatepinfield);
         updatepanel.add(updateButton);
-        
-        
-        
-        
-        
+
         JPanel deletePanel = new JPanel(new GridLayout(5, 2));
-         deletePanel.setBorder(BorderFactory.createTitledBorder("delete"));
-         deletePanel.setBackground(panel);
+        deletePanel.setBorder(BorderFactory.createTitledBorder("delete"));
+        deletePanel.setBackground(panel);
 
         JLabel deleteAccountNumberLabel = new JLabel("Account Number to Delete:");
         JTextField deleteAccountNumberField = new JTextField();
@@ -347,10 +311,8 @@ inputpanel.setBackground(panel);
         JButton deleteButton = new JButton("Delete User");
         deleteButton.setBackground(button);
         deleteButton.setForeground(buttontextcolor);
-        deleteButton.setPreferredSize(new Dimension(120,30));
-    
-      
-        
+        deleteButton.setPreferredSize(new Dimension(120, 30));
+
         deleteButton.addActionListener(e -> {
             String accountNumber = deleteAccountNumberField.getText();
 
@@ -375,42 +337,69 @@ inputpanel.setBackground(panel);
                 JOptionPane.showMessageDialog(frame, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-           
             deleteAccountNumberField.setText("");
         });
 
         deletePanel.add(deleteAccountNumberLabel);
         deletePanel.add(deleteAccountNumberField);
         deletePanel.add(deleteButton);
-        
-        
-        
-                inputpanel.add(addbutton);
-                
-                 centralpanel.add(viewbutton , BorderLayout.NORTH);
-                 centralpanel.add(scrollpane , BorderLayout.CENTER);
-                 
-                 JTabbedPane tabbedpane=new JTabbedPane();
-               tabbedpane.addTab("Adduser",inputpanel);
-               tabbedpane.addTab("viewusers",centralpanel);
-                tabbedpane.addTab("delete",deletePanel);
-                tabbedpane.addTab("update",updatepanel);
-                
-                frame.add(tabbedpane,BorderLayout.CENTER);
-                
-                frame.setVisible(true);
-           
-                
-                
-                 
-     }
-    
+
+        inputpanel.add(addbutton);
+
+        centralpanel.add(viewbutton, BorderLayout.NORTH);
+        centralpanel.add(scrollpane, BorderLayout.CENTER);
+
+        JTabbedPane tabbedpane = new JTabbedPane();
+        tabbedpane.addTab("Adduser", inputpanel);
+        tabbedpane.addTab("viewusers", centralpanel);
+        tabbedpane.addTab("delete", deletePanel);
+        tabbedpane.addTab("update", updatepanel);
+
+        frame.add(tabbedpane, BorderLayout.CENTER);
+
+        frame.setVisible(true);
+
+    }
+
+    public void saveUsersToFile(String filePath) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            for (String[] user : users) {
+                writer.println(String.join(",", user));
+            }
+            System.out.println("Users saved successfully to file.");
+        } catch (IOException e) {
+            System.out.println("Error saving users to file: " + e.getMessage());
+        }
+    }
+
+    public ArrayList<String[]> loadUsersFromFile(String filePath) {
+        ArrayList<String[]> loadedUsers = new ArrayList<>();
+        try (FileReader reader = new FileReader(filePath)) {
+            StringBuilder data = new StringBuilder();
+            int character;
+            while ((character = reader.read()) != -1) {
+                if (character == '\n') {
+                    String[] user = data.toString().split(",");
+                    if (user.length == 4) {
+                        loadedUsers.add(user);
+                    }
+                    data.setLength(0); // Clear the StringBuilder for the next line
+                } else {
+                    data.append((char) character);
+                }
+            }
+            // Handle the last line if it doesn't end with a newline
+            if (data.length() > 0) {
+                String[] user = data.toString().split(",");
+                if (user.length == 4) {
+                    loadedUsers.add(user);
+                }
+            }
+            System.out.println("Users loaded successfully from file.");
+        } catch (IOException e) {
+            System.out.println("Error loading users from file: " + e.getMessage());
+        }
+        return loadedUsers;
+    }
+
 }
-
-
-  
-
-
- 
- 
-  

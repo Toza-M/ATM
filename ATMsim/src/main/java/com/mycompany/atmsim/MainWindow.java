@@ -6,9 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class MainWindow extends JFrame implements ActionListener{
+public class MainWindow extends JFrame implements ActionListener {
     JButton userButton;
     JButton adminButton;
+
     public MainWindow() {
         // The Main Window
         setTitle("ATM SIM");
@@ -43,7 +44,7 @@ public class MainWindow extends JFrame implements ActionListener{
         Font buttonFont = new Font("Arial", Font.PLAIN, 14);
 
         // Make it in for loop to not waste my time
-        for (JButton btn : new JButton[]{userButton, adminButton}) {
+        for (JButton btn : new JButton[] { userButton, adminButton }) {
             btn.setBackground(black);
             btn.setForeground(white);
             btn.setFocusPainted(false);
@@ -62,15 +63,18 @@ public class MainWindow extends JFrame implements ActionListener{
         add(mainPanel);
 
         userButton.addActionListener(this);
-        
+        adminButton.addActionListener(this);
+
     }
 
     // The action after clicking on the buttons
     // The user and admin sides are not implemented yet
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == userButton) new UserGui();
-        if(e.getSource() == adminButton) new AdminSide();
+        if (e.getSource() == userButton)
+            new UserGui();
+        if (e.getSource() == adminButton)
+            new AdminSide();
     }
-    
+
 }

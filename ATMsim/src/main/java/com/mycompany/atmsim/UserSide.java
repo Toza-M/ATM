@@ -24,7 +24,6 @@ public class UserSide {
         loadUserData();
     }
 
-
     private void loadUserData() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
@@ -48,23 +47,26 @@ public class UserSide {
     public double getBalance() {
         return balance;
     }
+
     public boolean deposit(double amount) {
-    if (amount <= 0) {
-        return false;
+        if (amount <= 0) {
+            return false;
+        }
+
+        balance += amount;
+        updateUserData();
+        return true;
     }
 
-    balance += amount;
-    updateUserData();
-    return true;
-}
-public boolean withdraw(double amount) {
-    if (amount <= 0 || amount > balance) {
-        return false;
+    public boolean withdraw(double amount) {
+        if (amount <= 0 || amount > balance) {
+            return false;
+        }
+        balance -= amount;
+        updateUserData();
+        return true;
     }
-    balance -= amount;
-    updateUserData();
-    return true;
-}
+
     public boolean changePin(String newPin) {
         this.pin = newPin;
         updateUserData();
@@ -97,5 +99,4 @@ public boolean withdraw(double amount) {
         }
     }
 
-    
 }

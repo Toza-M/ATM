@@ -9,5 +9,5 @@ package com.mycompany.atmsim;
  * @author HP
  */
 public class TransactionFile {
-    
+
 }
