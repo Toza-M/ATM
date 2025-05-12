@@ -12,7 +12,7 @@ import java.io.*;
 import java.util.*;
 
 public class UserSide {
-    private static final String FILE_NAME = "users.txt";
+    private static final String file = "users.txt";
     private String name;
     private String cardNumber;
     private String pin;
@@ -25,7 +25,7 @@ public class UserSide {
     }
 
     private void loadUserData() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -35,8 +35,8 @@ public class UserSide {
                     break;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 
@@ -75,7 +75,7 @@ public class UserSide {
 
     private void updateUserData() {
         List<String> users = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -85,17 +85,17 @@ public class UserSide {
                     users.add(line);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            e.getMessage();
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (String user : users) {
                 writer.write(user);
                 writer.newLine();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 
