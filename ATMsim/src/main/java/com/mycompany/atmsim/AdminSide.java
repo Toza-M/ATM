@@ -77,31 +77,31 @@ public class AdminSide extends JFrame {
     }
 }
 
-    public void adduser() {
-        System.out.println("add user");
-        System.out.println("Enter ur name");
-
-        String name = scanner.nextLine();
-        System.out.println("Enter account number");
-        String accountnumber = scanner.nextLine();
-
-        System.out.println("Enter ur balance");
-        String balance = scanner.nextLine();
-
-        System.out.println("Enter pin");
-        String pin = scanner.nextLine();
-
-        String[] newuser = new String[4];
-        newuser[0] = name;
-        newuser[1] = accountnumber;
-        newuser[2] = String.valueOf(balance);
-        newuser[3] = pin;
-        users.add(newuser);
-        System.out.println("user added succssfully");
-        System.out.println("ur account number is " + accountnumber);
-
-    }
-      
+//    public void adduser() {
+//        System.out.println("add user");
+//        System.out.println("Enter ur name");
+//
+//        String name = scanner.nextLine();
+//        System.out.println("Enter account number");
+//        String accountnumber = scanner.nextLine();
+//
+//        System.out.println("Enter ur balance");
+//        String balance = scanner.nextLine();
+//
+//        System.out.println("Enter pin");
+//        String pin = scanner.nextLine();
+//
+//        String[] newuser = new String[4];
+//        newuser[0] = name;
+//        newuser[1] = accountnumber;
+//        newuser[2] = String.valueOf(balance);
+//        newuser[3] = pin;
+//        users.add(newuser);
+//        System.out.println("user added succssfully");
+//        System.out.println("ur account number is " + accountnumber);
+//
+//    }
+//      
         
 
     public void updateuser() {
@@ -608,6 +608,7 @@ resetpinpanel.add(resetPinButton);
             System.out.println("Error loading users from file: " + e.getMessage());
         }
         return loadedUsers;
-    }
+   }
+}
 
 
