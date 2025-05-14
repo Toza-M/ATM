@@ -101,6 +101,8 @@ public class AdminSide extends JFrame {
         System.out.println("ur account number is " + accountnumber);
 
     }
+      
+        
 
     public void updateuser() {
 
@@ -199,9 +201,9 @@ public class AdminSide extends JFrame {
         Color buttontextcolor = Color.white;
         Dimension fieldsize = new Dimension(125, 25);
 
-        JPanel inputpanel = new JPanel(new GridLayout(5, 2));
-        inputpanel.setBorder(BorderFactory.createTitledBorder("Adduser"));
-        inputpanel.setBackground(panel);
+        JPanel addpanel = new JPanel(new GridLayout(5, 2));
+        addpanel.setBorder(BorderFactory.createTitledBorder("Adduser"));
+        addpanel.setBackground(panel);
 
         JLabel namelabel = new JLabel("Name:");
         JTextField namefield = new JTextField();
@@ -219,14 +221,14 @@ public class AdminSide extends JFrame {
         JPasswordField pinfield = new JPasswordField();
         pinfield.setPreferredSize(fieldsize);
 
-        inputpanel.add(namelabel);
-        inputpanel.add(namefield);
-        inputpanel.add(accountnumberlabel);
-        inputpanel.add(accountnumberfield);
-        inputpanel.add(balancelabel);
-        inputpanel.add(balancefield);
-        inputpanel.add(pinlabel);
-        inputpanel.add(pinfield);
+        addpanel.add(namelabel);
+        addpanel.add(namefield);
+        addpanel.add(accountnumberlabel);
+        addpanel.add(accountnumberfield);
+        addpanel.add(balancelabel);
+        addpanel.add(balancefield);
+        addpanel.add(pinlabel);
+        addpanel.add(pinfield);
 
         JButton addbutton = new JButton("Add User");
         addbutton.setBackground(button);
@@ -262,11 +264,14 @@ public class AdminSide extends JFrame {
                 JOptionPane.showMessageDialog(frame, "user added successfully!!!!!!");
             }
         });
+         
+          
+        
 
         // JPanel viewallusers=new JPanel(new GridLayout(8,2)
-        JPanel centralpanel = new JPanel(new BorderLayout());
-        centralpanel.setBorder(BorderFactory.createTitledBorder("view users"));
-        centralpanel.setBackground(panel);
+        JPanel viewalluserspanel = new JPanel(new BorderLayout());//view all users
+        viewalluserspanel.setBorder(BorderFactory.createTitledBorder("view users"));
+        viewalluserspanel.setBackground(panel);
 
         JTextArea textarea = new JTextArea();
         textarea.setEditable(false);
@@ -293,7 +298,8 @@ public class AdminSide extends JFrame {
             textarea.setText(result);
 
         });
-        JPanel updatepanel = new JPanel(new GridLayout(4, 2));
+        JPanel updatepanel = new JPanel(new GridLayout(4, 2)); //update
+        
         updatepanel.setBackground(panel);
         updatepanel.setBorder(BorderFactory.createTitledBorder("update"));
 
@@ -407,17 +413,155 @@ public class AdminSide extends JFrame {
         deletePanel.add(deleteAccountNumberLabel);
         deletePanel.add(deleteAccountNumberField);
         deletePanel.add(deleteButton);
+        
+        
+        
+        
+        JPanel searchPanel = new JPanel(new GridLayout(3, 2)); // to search
+        
+        searchPanel.setBorder(BorderFactory.createTitledBorder("Search User"));
+        searchPanel.setBackground(panel);
 
-        inputpanel.add(addbutton);
+        JLabel searchAccountNumberLabel = new JLabel("Enter Account Number:");
+        JTextField searchAccountNumberField = new JTextField();
+        JButton searchButton = new JButton("Search User");
+        searchButton.setBackground(button);
+        searchButton.setForeground(buttontextcolor);
 
-        centralpanel.add(viewbutton, BorderLayout.NORTH);
-        centralpanel.add(scrollpane, BorderLayout.CENTER);
+        searchButton.addActionListener(e -> {
+            String accountNumber = searchAccountNumberField.getText();
+
+            if (accountNumber.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Account Number is required!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            boolean userFound = false;
+            for (String[] user : users) {
+                if (user[1].equals(accountNumber)) {
+                    JOptionPane.showMessageDialog(frame,
+                            "User Details:\n" +
+                            "Name: " + user[0] + "\n" +
+                            "Account Number: " + user[1] + "\n" +
+                            "Balance: " + user[2] + "\n" +
+                            "PIN: ***",
+                            "User Found", JOptionPane.INFORMATION_MESSAGE);
+                    userFound = true;
+                    break;
+                }
+            }
+
+            if (!userFound) {
+                JOptionPane.showMessageDialog(frame, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            searchAccountNumberField.setText("");
+        });
+
+        searchPanel.add(searchAccountNumberLabel);
+        searchPanel.add(searchAccountNumberField);
+        searchPanel.add(searchButton);
+         
+    JPanel resetpinpanel = new JPanel(new GridLayout(5, 2));// resest pin
+    
+    
+resetpinpanel.setBorder(BorderFactory.createTitledBorder("Reset PIN"));
+resetpinpanel.setBackground(panel);
+
+JLabel resetaccountnumberpanel = new JLabel("Account Number:");
+JTextField resetAccountNumberField = new JTextField();
+
+JLabel oldPinLabel = new JLabel("Old PIN:");
+JTextField oldpinfield = new JTextField();
+
+JLabel newpinpanel = new JLabel("New PIN:");
+JTextField newpinfield = new JTextField();
+
+JLabel confirmpinpanel = new JLabel("Confirm New PIN:");
+JTextField confirmPinField = new JTextField();
+
+JButton resetPinButton = new JButton("Reset PIN");
+resetPinButton.setBackground(button);
+resetPinButton.setForeground(buttontextcolor);
+resetPinButton.setPreferredSize(new Dimension(120, 30));
+
+
+resetAccountNumberField.addActionListener(e -> oldpinfield.requestFocus());
+oldpinfield.addActionListener(e -> newpinfield.requestFocus());
+newpinfield.addActionListener(e -> confirmPinField.requestFocus());
+confirmPinField.addActionListener(e -> resetPinButton.requestFocus());
+
+resetPinButton.addActionListener(e -> {
+    String accountNumber = resetAccountNumberField.getText();
+    String oldPin = oldpinfield.getText();
+    String newPin = newpinfield.getText();
+    String confirmPin = confirmPinField.getText();
+
+    if (accountNumber.isEmpty() || oldPin.isEmpty() || newPin.isEmpty() || confirmPin.isEmpty()) {
+        JOptionPane.showMessageDialog(frame, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    boolean userFound = false;
+    for (String[] user : users) {
+        if (user.length == 4 && user[1].equals(accountNumber)) {
+            userFound = true;
+
+            if (!user[3].equals(oldPin)) {
+                JOptionPane.showMessageDialog(frame, "Invalid old PIN.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (!newPin.equals(confirmPin)) {
+                JOptionPane.showMessageDialog(frame, "New PIN and confirmation do not match.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            user[3] = newPin;
+            JOptionPane.showMessageDialog(frame, "PIN reset successfully!");
+            break;
+        }
+    }
+
+    if (!userFound) {
+        JOptionPane.showMessageDialog(frame, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+ 
+    resetAccountNumberField.setText("");
+    oldpinfield.setText("");
+    newpinfield.setText("");
+    confirmPinField.setText("");
+});
+
+resetpinpanel.add(resetaccountnumberpanel);
+resetpinpanel.add(resetAccountNumberField);
+resetpinpanel.add(oldPinLabel);
+resetpinpanel.add(oldpinfield);
+resetpinpanel.add(newpinpanel);
+resetpinpanel.add(newpinfield);
+resetpinpanel.add(confirmpinpanel);
+resetpinpanel.add(confirmPinField);
+resetpinpanel.add(resetPinButton);
+        
+        
+        
+        
+
+        addpanel.add(addbutton);
+
+        viewalluserspanel.add(viewbutton, BorderLayout.NORTH);
+        viewalluserspanel.add(scrollpane, BorderLayout.CENTER);
 
         JTabbedPane tabbedpane = new JTabbedPane();
-        tabbedpane.addTab("Adduser", inputpanel);
-        tabbedpane.addTab("viewusers", centralpanel);
+        tabbedpane.addTab("Adduser", addpanel);
+        tabbedpane.addTab("viewusers", viewalluserspanel);
         tabbedpane.addTab("delete", deletePanel);
         tabbedpane.addTab("update", updatepanel);
+        tabbedpane.addTab("search user",searchPanel );
+        tabbedpane.addTab("reset",resetpinpanel );
+
+        
 
         frame.add(tabbedpane, BorderLayout.CENTER);
 
