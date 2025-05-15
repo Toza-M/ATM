@@ -181,7 +181,7 @@ public class AdminSide extends JFrame {
 
     public AdminSide() {
         // Load users from file when the program starts
-        users = loadUsersFromFile(DATA_FILE);
+        users = loadUsersFromFile();
 
         frame = new JFrame("Admin side");
         frame.setSize(600, 500);
@@ -192,7 +192,7 @@ public class AdminSide extends JFrame {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                saveUsersToFile(DATA_FILE);
+                saveUsersToFile();
             }
         });
 
@@ -569,8 +569,8 @@ resetpinpanel.add(resetPinButton);
 
     }
 
-    public void saveUsersToFile(String filePath) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+    public void saveUsersToFile() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("users.txt"))) {
             for (String[] user : users) {
                 writer.println(String.join(",", user));
             }
@@ -580,9 +580,9 @@ resetpinpanel.add(resetPinButton);
         }
     }
 
-    public ArrayList<String[]> loadUsersFromFile(String filePath) {
+    public ArrayList<String[]> loadUsersFromFile() {
         ArrayList<String[]> loadedUsers = new ArrayList<>();
-        try (FileReader reader = new FileReader(filePath)) {
+        try (FileReader reader = new FileReader("users.txt")) {
             StringBuilder data = new StringBuilder();
             int character;
             while ((character = reader.read()) != -1) {
@@ -610,5 +610,4 @@ resetpinpanel.add(resetPinButton);
         return loadedUsers;
    }
 }
-
 

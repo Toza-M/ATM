@@ -47,6 +47,9 @@ public class UserSide {
     public double getBalance() {
         return balance;
     }
+    public String getCardNumber(){
+        return cardNumber;
+    }
 
     public boolean deposit(double amount) {
         if (amount <= 0) {
@@ -55,6 +58,7 @@ public class UserSide {
 
         balance += amount;
         updateUserData();
+        TransactionFile.log(this.getName(), this.getCardNumber(), "DEPOSIT");
         return true;
     }
 
@@ -64,12 +68,14 @@ public class UserSide {
         }
         balance -= amount;
         updateUserData();
+        TransactionFile.log(this.getName(), this.getCardNumber(), "WITHDRAW");
         return true;
     }
 
     public boolean changePin(String newPin) {
         this.pin = newPin;
         updateUserData();
+        TransactionFile.log(this.getName(), this.getCardNumber(), "CHANGE PIN");
         return true;
     }
 
