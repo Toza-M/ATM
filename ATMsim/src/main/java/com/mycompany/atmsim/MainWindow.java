@@ -64,6 +64,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
         userButton.addActionListener(this);
         adminButton.addActionListener(this);
+        
 
     }
 
