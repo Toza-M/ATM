@@ -18,11 +18,15 @@ public class InputChecker {
      */
 
     public static boolean isValidUser(String cardNumber, String pin) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("admin_users.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 3 && parts[1].trim().equals(cardNumber) && parts[2].trim().equals(pin)) {
+                if (parts[1].trim().equals(cardNumber) && parts[3].trim().equals(pin)) {
+                    for(String n : parts)
+                    {
+                        System.out.println(n);
+                    }
                     return true;
                 }
             }

@@ -77,30 +77,30 @@ public class AdminSide extends JFrame {
     }
 }
 
-//    public void adduser() {
-//        System.out.println("add user");
-//        System.out.println("Enter ur name");
-//
-//        String name = scanner.nextLine();
-//        System.out.println("Enter account number");
-//        String accountnumber = scanner.nextLine();
-//
-//        System.out.println("Enter ur balance");
-//        String balance = scanner.nextLine();
-//
-//        System.out.println("Enter pin");
-//        String pin = scanner.nextLine();
-//
-//        String[] newuser = new String[4];
-//        newuser[0] = name;
-//        newuser[1] = accountnumber;
-//        newuser[2] = String.valueOf(balance);
-//        newuser[3] = pin;
-//        users.add(newuser);
-//        System.out.println("user added succssfully");
-//        System.out.println("ur account number is " + accountnumber);
-//
-//    }
+    public void adduser() {
+        System.out.println("add user");
+        System.out.println("Enter ur name");
+
+        String name = scanner.nextLine();
+        System.out.println("Enter account number");
+        String accountnumber = scanner.nextLine();
+
+        System.out.println("Enter ur balance");
+        String balance = scanner.nextLine();
+
+        System.out.println("Enter pin");
+        String pin = scanner.nextLine();
+
+        String[] newuser = new String[4];
+        newuser[0] = name;
+        newuser[1] = accountnumber;
+        newuser[2] = String.valueOf(balance);
+        newuser[3] = pin;
+        users.add(newuser);
+        System.out.println("user added succssfully");
+        System.out.println("ur account number is " + accountnumber);
+
+    }
 //      
         
 
@@ -196,14 +196,16 @@ public class AdminSide extends JFrame {
             }
         });
 
-        Color panel = new Color(245, 245, 245);// 34aan a8yr mara wahda fkolo
-        Color button = new Color(0, 120, 215);
+        Color panelcolor = new Color(245, 245, 245);// 34aan a8yr mara wahda fkolo
+        Color buttoncolor = new Color(0, 120, 215);
         Color buttontextcolor = Color.white;
         Dimension fieldsize = new Dimension(125, 25);
+        
+        
 
         JPanel addpanel = new JPanel(new GridLayout(5, 2));
         addpanel.setBorder(BorderFactory.createTitledBorder("Adduser"));
-        addpanel.setBackground(panel);
+        addpanel.setBackground(panelcolor);
 
         JLabel namelabel = new JLabel("Name:");
         JTextField namefield = new JTextField();
@@ -231,7 +233,8 @@ public class AdminSide extends JFrame {
         addpanel.add(pinfield);
 
         JButton addbutton = new JButton("Add User");
-        addbutton.setBackground(button);
+        addpanel.add(addbutton);
+        addbutton.setBackground(buttoncolor);
         addbutton.setForeground(buttontextcolor);
         addbutton.setPreferredSize(new Dimension(120, 30));
 
@@ -271,14 +274,14 @@ public class AdminSide extends JFrame {
         // JPanel viewallusers=new JPanel(new GridLayout(8,2)
         JPanel viewalluserspanel = new JPanel(new BorderLayout());//view all users
         viewalluserspanel.setBorder(BorderFactory.createTitledBorder("view users"));
-        viewalluserspanel.setBackground(panel);
+        viewalluserspanel.setBackground(panelcolor);
 
         JTextArea textarea = new JTextArea();
         textarea.setEditable(false);
         JScrollPane scrollpane = new JScrollPane(textarea);
 
         JButton viewbutton = new JButton("view users");
-        viewbutton.setBackground(button);
+        viewbutton.setBackground(buttoncolor);
         viewbutton.setForeground(buttontextcolor);
         viewbutton.setPreferredSize(new Dimension(120, 30));
 
@@ -298,9 +301,16 @@ public class AdminSide extends JFrame {
             textarea.setText(result);
 
         });
+        
+        
+                viewalluserspanel.add(viewbutton, BorderLayout.NORTH);
+        viewalluserspanel.add(scrollpane, BorderLayout.CENTER);  
+        
+        
+        
         JPanel updatepanel = new JPanel(new GridLayout(4, 2)); //update
         
-        updatepanel.setBackground(panel);
+        updatepanel.setBackground(panelcolor);
         updatepanel.setBorder(BorderFactory.createTitledBorder("update"));
 
         JLabel updateaccountnumberlabel = new JLabel("Account Number:");
@@ -316,7 +326,7 @@ public class AdminSide extends JFrame {
         updatepinfield.setPreferredSize(fieldsize);
 
         JButton updateButton = new JButton("Update User");
-        updateButton.setBackground(button);
+        updateButton.setBackground(buttoncolor);
         updateButton.setForeground(buttontextcolor);
         updateButton.setPreferredSize(new Dimension(120, 30));
 
@@ -372,14 +382,14 @@ public class AdminSide extends JFrame {
 
         JPanel deletePanel = new JPanel(new GridLayout(5, 2));
         deletePanel.setBorder(BorderFactory.createTitledBorder("delete"));
-        deletePanel.setBackground(panel);
+        deletePanel.setBackground(panelcolor);
 
         JLabel deleteAccountNumberLabel = new JLabel("Account Number to Delete:");
         JTextField deleteAccountNumberField = new JTextField();
         deleteAccountNumberField.setPreferredSize(fieldsize);
 
         JButton deleteButton = new JButton("Delete User");
-        deleteButton.setBackground(button);
+        deleteButton.setBackground(buttoncolor);
         deleteButton.setForeground(buttontextcolor);
         deleteButton.setPreferredSize(new Dimension(120, 30));
 
@@ -420,12 +430,12 @@ public class AdminSide extends JFrame {
         JPanel searchPanel = new JPanel(new GridLayout(3, 2)); // to search
         
         searchPanel.setBorder(BorderFactory.createTitledBorder("Search User"));
-        searchPanel.setBackground(panel);
+        searchPanel.setBackground(panelcolor);
 
         JLabel searchAccountNumberLabel = new JLabel("Enter Account Number:");
         JTextField searchAccountNumberField = new JTextField();
         JButton searchButton = new JButton("Search User");
-        searchButton.setBackground(button);
+        searchButton.setBackground(buttoncolor);
         searchButton.setForeground(buttontextcolor);
 
         searchButton.addActionListener(e -> {
@@ -466,7 +476,7 @@ public class AdminSide extends JFrame {
     
     
 resetpinpanel.setBorder(BorderFactory.createTitledBorder("Reset PIN"));
-resetpinpanel.setBackground(panel);
+resetpinpanel.setBackground(panelcolor);
 
 JLabel resetaccountnumberpanel = new JLabel("Account Number:");
 JTextField resetAccountNumberField = new JTextField();
@@ -481,7 +491,7 @@ JLabel confirmpinpanel = new JLabel("Confirm New PIN:");
 JTextField confirmPinField = new JTextField();
 
 JButton resetPinButton = new JButton("Reset PIN");
-resetPinButton.setBackground(button);
+resetPinButton.setBackground(buttoncolor);
 resetPinButton.setForeground(buttontextcolor);
 resetPinButton.setPreferredSize(new Dimension(120, 30));
 
@@ -547,12 +557,9 @@ resetpinpanel.add(resetPinButton);
         
         
         
+ 
 
-        addpanel.add(addbutton);
-
-        viewalluserspanel.add(viewbutton, BorderLayout.NORTH);
-        viewalluserspanel.add(scrollpane, BorderLayout.CENTER);
-
+         // add all panels to Jtappedpane
         JTabbedPane tabbedpane = new JTabbedPane();
         tabbedpane.addTab("Adduser", addpanel);
         tabbedpane.addTab("viewusers", viewalluserspanel);
@@ -560,14 +567,11 @@ resetpinpanel.add(resetPinButton);
         tabbedpane.addTab("update", updatepanel);
         tabbedpane.addTab("search user",searchPanel );
         tabbedpane.addTab("reset",resetpinpanel );
-
         
-
         frame.add(tabbedpane, BorderLayout.CENTER);
-
         frame.setVisible(true);
 
-    }
+    } 
 
     public void saveUsersToFile(String filePath) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
