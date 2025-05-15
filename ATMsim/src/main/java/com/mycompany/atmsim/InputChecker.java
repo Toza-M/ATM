@@ -20,7 +20,7 @@ public class InputChecker {
 
     public static boolean isValidUser(String cardNumber, String pin) {
         try (BufferedReader reader = new BufferedReader(new FileReader("admin_users.txt"))) {
-=======
+
         functions to check the correct PIN & Card number for users 
         and to check the correct Email and Password for admins
         You need to make the files to test this funcs
@@ -32,7 +32,6 @@ public class InputChecker {
     
      public static boolean isValidUser(String cardNumber, String pin) {
         try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
->>>>>>> d100e5ca4c957b68acc76014ad253a42c0905d18
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
