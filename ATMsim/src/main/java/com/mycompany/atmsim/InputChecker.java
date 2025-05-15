@@ -18,17 +18,7 @@ public class InputChecker {
      * Email,Name,Password
      */
 
-    public static boolean isValidUser(String cardNumber, String pin) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("admin_users.txt"))) {
 
-        functions to check the correct PIN & Card number for users 
-        and to check the correct Email and Password for admins
-        You need to make the files to test this funcs
-        the template for users.txt:
-            Name,Card Number,PIN,Balance
-        the template for admins.txt:
-            Email,Name,Password
-    */
     
      public static boolean isValidUser(String cardNumber, String pin) {
         try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
