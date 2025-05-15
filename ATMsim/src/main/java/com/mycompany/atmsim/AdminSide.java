@@ -574,7 +574,7 @@ resetpinpanel.add(resetPinButton);
     } 
 
     public void saveUsersToFile() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("users.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("admin_users.txt"))) {
             for (String[] user : users) {
                 writer.println(String.join(",", user));
             }
@@ -614,4 +614,3 @@ resetpinpanel.add(resetPinButton);
         return loadedUsers;
    }
 }
-

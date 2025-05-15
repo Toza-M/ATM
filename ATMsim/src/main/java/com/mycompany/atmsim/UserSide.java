@@ -12,7 +12,7 @@ import java.io.*;
 import java.util.*;
 
 public class UserSide {
-    private static final String file = "users.txt";
+    private static final String file = "admin_users.txt";
     private String name;
     private String cardNumber;
     private String pin;
