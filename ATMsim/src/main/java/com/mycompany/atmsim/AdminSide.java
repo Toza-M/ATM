@@ -3,7 +3,7 @@ package com.mycompany.atmsim;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.awt.event.*;
-import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -12,70 +12,70 @@ public class AdminSide extends JFrame {
     private Scanner scanner = new Scanner(System.in);
     private ArrayList<String[]> users = new ArrayList<>(); // array list
     private static final String DATA_FILE = "admin_users.txt";
-    
+
     public void resetPin() {
-    System.out.print("Enter account number: ");
-    String accountNumber = scanner.nextLine();
+        System.out.print("Enter account number: ");
+        String accountNumber = scanner.nextLine();
 
-    System.out.print("Enter old PIN: ");
-    String oldPin = scanner.nextLine();
+        System.out.print("Enter old PIN: ");
+        String oldPin = scanner.nextLine();
 
-    boolean founded = false;
+        boolean founded = false;
 
-    for (String[] user : users) {
-        if (user.length == 4 && user[1].equals(accountNumber)) {
-            founded = true;
+        for (String[] user : users) {
+            if (user.length == 4 && user[1].equals(accountNumber)) {
+                founded = true;
 
-            if (!user[3].equals(oldPin)) {
-                System.out.println("Invalid old PIN.");
+                if (!user[3].equals(oldPin)) {
+                    System.out.println("Invalid old PIN.");
+                    return;
+                }
+
+                System.out.print("Enter new PIN: ");
+                String newPin = scanner.nextLine();
+
+                System.out.print("Confirm new PIN: ");
+                String confirmPin = scanner.nextLine();
+
+                if (!newPin.equals(confirmPin)) {
+                    System.out.println("New PINs do not match.");
+                    return;
+                }
+
+                user[3] = newPin;
+                System.out.println("PIN reset successfully.");
                 return;
             }
+        }
 
-            System.out.print("Enter new PIN: ");
-            String newPin = scanner.nextLine();
-
-            System.out.print("Confirm new PIN: ");
-            String confirmPin = scanner.nextLine();
-
-            if (!newPin.equals(confirmPin)) {
-                System.out.println("New PINs do not match.");
-                return;
-            }
-
-            user[3] = newPin;
-            System.out.println("PIN reset successfully.");
-            return;
+        if (!founded) {
+            System.out.println("Account number not found.");
         }
     }
-
-    if (!founded) {
-        System.out.println("Account number not found.");
-    }
-}
 
     public void searchAccount() {
-    System.out.println("Search for a user : ");
-    System.out.print("Enter the account number you want to serch for: ");
-    String accountNumber = scanner.nextLine();
+        System.out.println("Search for a user : ");
+        System.out.print("Enter the account number you want to serch for: ");
+        String accountNumber = scanner.nextLine();
 
-    boolean found = false;
+        boolean found = false;
 
-    for (String[] user : users) {
-        if (user.length >= 4 && user[1].equals(accountNumber)) {
-            System.out.println(" User founded:");
-            System.out.println("Name: " + user[0]);
-            System.out.println("Account Number: " + user[1]);
-            System.out.println("Balance: " + user[2]);
-            System.out.println("PIN: ****");
-            found = true;
-            break;
+        for (String[] user : users) {
+            if (user.length >= 4 && user[1].equals(accountNumber)) {
+                System.out.println(" User founded:");
+                System.out.println("Name: " + user[0]);
+                System.out.println("Account Number: " + user[1]);
+                System.out.println("Balance: " + user[2]);
+                System.out.println("PIN: ****");
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println(" Invalid account numer.");
         }
     }
-
-    if (!found) {
-        System.out.println(" Invalid account numer.");
-    }
-}
 
     public void adduser() {
         System.out.println("add user");
@@ -85,24 +85,32 @@ public class AdminSide extends JFrame {
         System.out.println("Enter account number");
         String accountnumber = scanner.nextLine();
 
+        // Check for duplicate account number
+        for (String[] user : users) {
+            if (user.length == 4 && user[1].equals(accountnumber)) {
+                System.out.println("A user with this account number already exists.");
+                return;
+            }
+        }
+
         System.out.println("Enter ur balance");
         String balance = scanner.nextLine();
 
         System.out.println("Enter pin");
         String pin = scanner.nextLine();
 
+        // Format: name, card number, balance, pin
         String[] newuser = new String[4];
         newuser[0] = name;
         newuser[1] = accountnumber;
-        newuser[2] = String.valueOf(balance);
+        newuser[2] = balance;
         newuser[3] = pin;
         users.add(newuser);
         System.out.println("user added succssfully");
         System.out.println("ur account number is " + accountnumber);
 
     }
-//      
-        
+    //
 
     public void updateuser() {
 
@@ -200,8 +208,6 @@ public class AdminSide extends JFrame {
         Color buttoncolor = new Color(0, 120, 215);
         Color buttontextcolor = Color.white;
         Dimension fieldsize = new Dimension(125, 25);
-        
-        
 
         JPanel addpanel = new JPanel(new GridLayout(5, 2));
         addpanel.setBorder(BorderFactory.createTitledBorder("Adduser"));
@@ -256,6 +262,16 @@ public class AdminSide extends JFrame {
                     return;
                 }
 
+                // Check for duplicate account number in GUI
+                for (String[] user : users) {
+                    if (user.length == 4 && user[1].equals(accountnumber)) {
+                        JOptionPane.showMessageDialog(frame, "A user with this account number already exists.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
+                // Format: name, card number, balance, pin
                 String[] newUser = { name, accountnumber, balance, pin };
                 users.add(newUser);
 
@@ -267,12 +283,9 @@ public class AdminSide extends JFrame {
                 JOptionPane.showMessageDialog(frame, "user added successfully!!!!!!");
             }
         });
-         
-          
-        
 
         // JPanel viewallusers=new JPanel(new GridLayout(8,2)
-        JPanel viewalluserspanel = new JPanel(new BorderLayout());//view all users
+        JPanel viewalluserspanel = new JPanel(new BorderLayout());// view all users
         viewalluserspanel.setBorder(BorderFactory.createTitledBorder("view users"));
         viewalluserspanel.setBackground(panelcolor);
 
@@ -301,15 +314,12 @@ public class AdminSide extends JFrame {
             textarea.setText(result);
 
         });
-        
-        
-                viewalluserspanel.add(viewbutton, BorderLayout.NORTH);
-        viewalluserspanel.add(scrollpane, BorderLayout.CENTER);  
-        
-        
-        
-        JPanel updatepanel = new JPanel(new GridLayout(4, 2)); //update
-        
+
+        viewalluserspanel.add(viewbutton, BorderLayout.NORTH);
+        viewalluserspanel.add(scrollpane, BorderLayout.CENTER);
+
+        JPanel updatepanel = new JPanel(new GridLayout(4, 2)); // update
+
         updatepanel.setBackground(panelcolor);
         updatepanel.setBorder(BorderFactory.createTitledBorder("update"));
 
@@ -423,12 +433,9 @@ public class AdminSide extends JFrame {
         deletePanel.add(deleteAccountNumberLabel);
         deletePanel.add(deleteAccountNumberField);
         deletePanel.add(deleteButton);
-        
-        
-        
-        
+
         JPanel searchPanel = new JPanel(new GridLayout(3, 2)); // to search
-        
+
         searchPanel.setBorder(BorderFactory.createTitledBorder("Search User"));
         searchPanel.setBackground(panelcolor);
 
@@ -451,10 +458,10 @@ public class AdminSide extends JFrame {
                 if (user[1].equals(accountNumber)) {
                     JOptionPane.showMessageDialog(frame,
                             "User Details:\n" +
-                            "Name: " + user[0] + "\n" +
-                            "Account Number: " + user[1] + "\n" +
-                            "Balance: " + user[2] + "\n" +
-                            "PIN: ***",
+                                    "Name: " + user[0] + "\n" +
+                                    "Account Number: " + user[1] + "\n" +
+                                    "Balance: " + user[2] + "\n" +
+                                    "PIN: ***",
                             "User Found", JOptionPane.INFORMATION_MESSAGE);
                     userFound = true;
                     break;
@@ -471,110 +478,103 @@ public class AdminSide extends JFrame {
         searchPanel.add(searchAccountNumberLabel);
         searchPanel.add(searchAccountNumberField);
         searchPanel.add(searchButton);
-         
-    JPanel resetpinpanel = new JPanel(new GridLayout(5, 2));// resest pin
-    
-    
-resetpinpanel.setBorder(BorderFactory.createTitledBorder("Reset PIN"));
-resetpinpanel.setBackground(panelcolor);
 
-JLabel resetaccountnumberpanel = new JLabel("Account Number:");
-JTextField resetAccountNumberField = new JTextField();
+        JPanel resetpinpanel = new JPanel(new GridLayout(5, 2));// resest pin
 
-JLabel oldPinLabel = new JLabel("Old PIN:");
-JTextField oldpinfield = new JTextField();
+        resetpinpanel.setBorder(BorderFactory.createTitledBorder("Reset PIN"));
+        resetpinpanel.setBackground(panelcolor);
 
-JLabel newpinpanel = new JLabel("New PIN:");
-JTextField newpinfield = new JTextField();
+        JLabel resetaccountnumberpanel = new JLabel("Account Number:");
+        JTextField resetAccountNumberField = new JTextField();
 
-JLabel confirmpinpanel = new JLabel("Confirm New PIN:");
-JTextField confirmPinField = new JTextField();
+        JLabel oldPinLabel = new JLabel("Old PIN:");
+        JTextField oldpinfield = new JTextField();
 
-JButton resetPinButton = new JButton("Reset PIN");
-resetPinButton.setBackground(buttoncolor);
-resetPinButton.setForeground(buttontextcolor);
-resetPinButton.setPreferredSize(new Dimension(120, 30));
+        JLabel newpinpanel = new JLabel("New PIN:");
+        JTextField newpinfield = new JTextField();
 
+        JLabel confirmpinpanel = new JLabel("Confirm New PIN:");
+        JTextField confirmPinField = new JTextField();
 
-resetAccountNumberField.addActionListener(e -> oldpinfield.requestFocus());
-oldpinfield.addActionListener(e -> newpinfield.requestFocus());
-newpinfield.addActionListener(e -> confirmPinField.requestFocus());
-confirmPinField.addActionListener(e -> resetPinButton.requestFocus());
+        JButton resetPinButton = new JButton("Reset PIN");
+        resetPinButton.setBackground(buttoncolor);
+        resetPinButton.setForeground(buttontextcolor);
+        resetPinButton.setPreferredSize(new Dimension(120, 30));
 
-resetPinButton.addActionListener(e -> {
-    String accountNumber = resetAccountNumberField.getText();
-    String oldPin = oldpinfield.getText();
-    String newPin = newpinfield.getText();
-    String confirmPin = confirmPinField.getText();
+        resetAccountNumberField.addActionListener(e -> oldpinfield.requestFocus());
+        oldpinfield.addActionListener(e -> newpinfield.requestFocus());
+        newpinfield.addActionListener(e -> confirmPinField.requestFocus());
+        confirmPinField.addActionListener(e -> resetPinButton.requestFocus());
 
-    if (accountNumber.isEmpty() || oldPin.isEmpty() || newPin.isEmpty() || confirmPin.isEmpty()) {
-        JOptionPane.showMessageDialog(frame, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        resetPinButton.addActionListener(e -> {
+            String accountNumber = resetAccountNumberField.getText();
+            String oldPin = oldpinfield.getText();
+            String newPin = newpinfield.getText();
+            String confirmPin = confirmPinField.getText();
 
-    boolean userFound = false;
-    for (String[] user : users) {
-        if (user.length == 4 && user[1].equals(accountNumber)) {
-            userFound = true;
-
-            if (!user[3].equals(oldPin)) {
-                JOptionPane.showMessageDialog(frame, "Invalid old PIN.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (accountNumber.isEmpty() || oldPin.isEmpty() || newPin.isEmpty() || confirmPin.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            if (!newPin.equals(confirmPin)) {
-                JOptionPane.showMessageDialog(frame, "New PIN and confirmation do not match.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            boolean userFound = false;
+            for (String[] user : users) {
+                if (user.length == 4 && user[1].equals(accountNumber)) {
+                    userFound = true;
+
+                    if (!user[3].equals(oldPin)) {
+                        JOptionPane.showMessageDialog(frame, "Invalid old PIN.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    if (!newPin.equals(confirmPin)) {
+                        JOptionPane.showMessageDialog(frame, "New PIN and confirmation do not match.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    user[3] = newPin;
+                    JOptionPane.showMessageDialog(frame, "PIN reset successfully!");
+                    break;
+                }
             }
 
-            user[3] = newPin;
-            JOptionPane.showMessageDialog(frame, "PIN reset successfully!");
-            break;
-        }
-    }
+            if (!userFound) {
+                JOptionPane.showMessageDialog(frame, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
 
-    if (!userFound) {
-        JOptionPane.showMessageDialog(frame, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+            resetAccountNumberField.setText("");
+            oldpinfield.setText("");
+            newpinfield.setText("");
+            confirmPinField.setText("");
+        });
 
- 
-    resetAccountNumberField.setText("");
-    oldpinfield.setText("");
-    newpinfield.setText("");
-    confirmPinField.setText("");
-});
+        resetpinpanel.add(resetaccountnumberpanel);
+        resetpinpanel.add(resetAccountNumberField);
+        resetpinpanel.add(oldPinLabel);
+        resetpinpanel.add(oldpinfield);
+        resetpinpanel.add(newpinpanel);
+        resetpinpanel.add(newpinfield);
+        resetpinpanel.add(confirmpinpanel);
+        resetpinpanel.add(confirmPinField);
+        resetpinpanel.add(resetPinButton);
 
-resetpinpanel.add(resetaccountnumberpanel);
-resetpinpanel.add(resetAccountNumberField);
-resetpinpanel.add(oldPinLabel);
-resetpinpanel.add(oldpinfield);
-resetpinpanel.add(newpinpanel);
-resetpinpanel.add(newpinfield);
-resetpinpanel.add(confirmpinpanel);
-resetpinpanel.add(confirmPinField);
-resetpinpanel.add(resetPinButton);
-        
-        
-        
-        
- 
-
-         // add all panels to Jtappedpane
+        // add all panels to Jtappedpane
         JTabbedPane tabbedpane = new JTabbedPane();
         tabbedpane.addTab("Adduser", addpanel);
         tabbedpane.addTab("viewusers", viewalluserspanel);
         tabbedpane.addTab("delete", deletePanel);
         tabbedpane.addTab("update", updatepanel);
-        tabbedpane.addTab("search user",searchPanel );
-        tabbedpane.addTab("reset",resetpinpanel );
-        
+        tabbedpane.addTab("search user", searchPanel);
+        tabbedpane.addTab("reset", resetpinpanel);
+
         frame.add(tabbedpane, BorderLayout.CENTER);
         frame.setVisible(true);
 
-    } 
+    }
 
     public void saveUsersToFile() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("admin_users.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(DATA_FILE))) {
             for (String[] user : users) {
                 writer.println(String.join(",", user));
             }
@@ -586,7 +586,7 @@ resetpinpanel.add(resetPinButton);
 
     public ArrayList<String[]> loadUsersFromFile() {
         ArrayList<String[]> loadedUsers = new ArrayList<>();
-        try (FileReader reader = new FileReader("users.txt")) {
+        try (FileReader reader = new FileReader(DATA_FILE)) {
             StringBuilder data = new StringBuilder();
             int character;
             while ((character = reader.read()) != -1) {
@@ -612,5 +612,5 @@ resetpinpanel.add(resetPinButton);
             System.out.println("Error loading users from file: " + e.getMessage());
         }
         return loadedUsers;
-   }
+    }
 }

@@ -10,9 +10,6 @@ public class ATMsim {
             new MainWindow().setVisible(true);
         });
 
-        
-         
-
     }
 }
 

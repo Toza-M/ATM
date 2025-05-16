@@ -29,9 +29,10 @@ public class UserSide {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 4 && parts[1].trim().equals(cardNumber) && parts[2].trim().equals(pin)) {
+                // Format: name, card number, balance, pin
+                if (parts.length == 4 && parts[1].trim().equals(cardNumber) && parts[3].trim().equals(pin)) {
                     this.name = parts[0].trim();
-                    this.balance = Double.parseDouble(parts[3].trim());
+                    this.balance = Double.parseDouble(parts[2].trim());
                     break;
                 }
             }
@@ -47,7 +48,8 @@ public class UserSide {
     public double getBalance() {
         return balance;
     }
-    public String getCardNumber(){
+
+    public String getCardNumber() {
         return cardNumber;
     }
 
@@ -86,7 +88,8 @@ public class UserSide {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 4 && parts[1].trim().equals(cardNumber)) {
-                    users.add(name + "," + cardNumber + "," + pin + "," + balance);
+                    // Format: name, card number, balance, pin
+                    users.add(name + "," + cardNumber + "," + balance + "," + pin);
                 } else {
                     users.add(line);
                 }
