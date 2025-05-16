@@ -70,9 +70,15 @@ public class MainWindow extends JFrame implements ActionListener {
         userButton.addActionListener(this);
         adminButton.addActionListener(this);
 
+        
+        // omar helal
+        
         loadAdminCredentials();
     }
 
+    
+   
+    
     private void loadAdminCredentials() {
         File file = new File(ADMIN_FILE);
         if (!file.exists()) {
@@ -241,3 +247,4 @@ public class MainWindow extends JFrame implements ActionListener {
     }
 
 }
+//omarhelal
