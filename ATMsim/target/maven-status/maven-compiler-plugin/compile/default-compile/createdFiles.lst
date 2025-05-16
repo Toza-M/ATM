@@ -6,6 +6,5 @@ com\mycompany\atmsim\ATMsim.class
 com\mycompany\atmsim\UserSide.class
 com\mycompany\atmsim\InputChecker.class
 com\mycompany\atmsim\UserGui$1.class
-com\mycompany\atmsim\DataFile.class
 com\mycompany\atmsim\TransactionFile.class
 com\mycompany\atmsim\MainWindow.class
